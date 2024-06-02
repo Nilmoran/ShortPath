@@ -27,7 +27,7 @@ Edge::Edge(Node *sourceNode, Node *destNode)
     timer->setFrameRange(0,500);
     timer->setLoopCount(1);
 
-    // Создание объекта анимации для ребра и привязывязка его к таймеру
+    // Создание объекта анимации для ребра и привязка его к таймеру
     posAnim= new QGraphicsItemAnimation;
     posAnim->setTimeLine(timer);
     // Создание нового графического элемента для отображения

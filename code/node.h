@@ -14,9 +14,9 @@ class Node : public QGraphicsItem // Класс узлов графа
 {
 private:
     int index; // Индекс узла
-    QList<Edge *> edgeList; // Список ссылок на рёбера, с которыми соединен узел
+    QList<Edge *> edgeList; // Список ссылок на рёбра, с которыми соединен узел
     QPointF newPos; // Координаты узла на экране
-    GraphWidget *graph; // Ссылка на виждет, на котором должн отображаться узел
+    GraphWidget *graph; // Ссылка на виждет, на котором должен отображаться узел
     int dist = 0;
 
 public:

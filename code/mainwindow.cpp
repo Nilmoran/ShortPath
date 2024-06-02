@@ -28,6 +28,7 @@ MainWindow::~MainWindow()
     writeSettings();  // Сохранение настроек перед закрытием программы
 }
 
+// Метод для загрузки сохраненных настроек
 void MainWindow::readSettings()
 {
     // Чтение настроек
@@ -42,6 +43,7 @@ void MainWindow::readSettings()
     m_settings.endGroup();  // Завершение группы настроек
 }
 
+// Сохраняет настройки (размеры окна и путь к программе)
 void MainWindow::writeSettings()
 {
     // Запись настроек
@@ -52,15 +54,15 @@ void MainWindow::writeSettings()
     m_settings.endGroup();  // Завершение группы настроек
 }
 
+// Метод для удаления выбранных вершин графа
 void MainWindow::deleteNode()
-// Удаляет выбранные вершины графа
 {
     graph->deleteSelectedItems();  // Удаление выбранных элементов графа
     graph->changeIndecesOfAllVerteces();  // Изменение индексов всех вершин графа
 }
 
+// Метод для отображения всех вершин графа
 void MainWindow::on_pb_CoordinatesOfAllNode_clicked()
-// Выписывает координаты всех вершин графа
 {
     QString s = "Координаты вершин: \n\n";  // Начальная строка с заголовком
     for (int i = 0; i < graph->getListOfNodeSize(); i++)  // Проход по всем вершинам графа
@@ -71,8 +73,8 @@ void MainWindow::on_pb_CoordinatesOfAllNode_clicked()
     ui->textBrowser->setText(s);  // Отображение текста в textBrowser
 }
 
+// Метод для отображения всех рёбер графа
 void MainWindow::on_pb_LengthOfEdges_clicked()
-// Выписывает длину всех рёбер графа
 {
     QString s = "Веса рёбер:\n\n";  // Начальная строка с заголовком
     int i = 0;
@@ -210,7 +212,7 @@ void MainWindow::on_OpenButton_clicked()
 // Метод для сохранения графа в файл с расширением .graph
 void MainWindow::on_saveButton_clicked()
 {
-    // Открываем диалоговое окно для сохранения графа в файл с раширением .graph по пути по умолчанию в корневой папке с программой
+    // Открываем диалоговое окно для сохранения графа в файл с расширением .graph по пути по умолчанию в корневой папке с программой
     QString fileName = QFileDialog::getSaveFileName(this, "Сохранить граф", InputPath, "Graph file (*.graph)");
     // Проверка на пустое имя файла
     if (!fileName.isEmpty())
@@ -333,7 +335,7 @@ void MainWindow::on_pb_IncidenceListFile_clicked()
     }
 }
 
-
+// Метод для запуска алгоритма Дейкстры
 void MainWindow::on_pushAlgorithm_clicked()
 {
     // Проверка на пустоту графа
@@ -474,7 +476,7 @@ void MainWindow::on_pushAlgorithm_clicked()
     lastDijkstraSource = source;
 }
 
-
+// Метод для отображения кратчайшего пути до вершины от начальной вершины заданной в алгоритме Дейкстры
 void MainWindow::on_pushFind_clicked()
 {
     // Проверка, был ли уже выполнен алгоритм Дейкстры
@@ -569,23 +571,35 @@ void MainWindow::on_pushFind_clicked()
     }
 }
 
+// Метод для обнуления значений рассчитанных в алгоритме Дейкстры
 void MainWindow::on_pushStop_clicked()
 {
+    // Устанавливает флаг остановки алгоритма в true
     stop = true;
-    foreach (Edges* curr, graph->getEdges()) //
+
+    // Перебирает все рёбра графа и сбрасывает их цвет и Z-значение
+    foreach (Edges* curr, graph->getEdges())
     {
+        // Устанавливает цвет ребра в чёрный
         curr->edge->setColor(QColor(0, 0, 0, 255));
+        // Устанавливает Z-значение ребра в 0
         curr->edge->setZValue(0);
+        // Обновляет отображение ребра
         curr->edge->update();
     }
-    for (int i=0; i<graph->getListOfNodeSize(); i++)
+
+    // Сбрасывает расстояние до всех вершин графа в 0
+    for (int i = 0; i < graph->getListOfNodeSize(); i++)
     {
         graph->findNode(i)->setDist(0);
     }
+
+    // Устанавливает текст в textBrowser, объясняющий, как добавлять вершины и рёбра
     ui->textBrowser->setText("Добавить новую вершину - двойное нажатие ЛКМ.\n\n"
                              "Добавить новое ребро - выделите первую вершину нажатием ЛКМ,"
                              "затем зажать Shift и дважды нажмите ПКМ по второй вершине.");
 }
+
 
 // Метод для создания графа из файла
 void MainWindow::on_action_Open_file_triggered()

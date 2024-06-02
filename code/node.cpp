@@ -24,7 +24,7 @@ void Node::setDist(int value)
 Node::Node(GraphWidget *graphWidget): graph(graphWidget)
 {
     setFlags(ItemIsSelectable | ItemIsMovable); //  Флаг, который делает узел выбираемым и перемещаемым
-    setFlag(ItemSendsGeometryChanges); // Флаг, который озволяет узлу отправлять измненения своей геометрии
+    setFlag(ItemSendsGeometryChanges); // Флаг, который позволяет узлу отправлять изменения своей геометрии
     setCacheMode(DeviceCoordinateCache); // Флаг, устанавливает режим кэширования, чтобы улучшить производительность при отрисовке
     setZValue(+1); // Устанавливает Z-значение для узла, чтобы он отображался поверх других элементов с меньшим Z-значением
 }
@@ -79,11 +79,10 @@ QPainterPath Node::shape() const
 }
 
 // Метод отвечает за визуальное представление узла
-// Обрабатка различных состояний узла, в зависимости от взаимодействия пользователя
+// Обработка различных состояний узла, в зависимости от взаимодействия пользователя
 // А также отвечает за отрисовку минимального расстояния до узла
 void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
-    // Fill
     if (option->state & QStyle::State_Sunken) // Заливка узла желтым цветом при перетаскивании
     {
         painter->setBrush(QColor(254, 254, 34, 255));
